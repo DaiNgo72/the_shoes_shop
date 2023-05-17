@@ -1,0 +1,6 @@
+// import ... from ...
+// export ...
+
+// vừa import vừa export
+export { default as LogoIcon } from './Logo';
+export { default as SearchIcon } from './SearchIcon';

@@ -42,6 +42,7 @@ h1 {
 
 html {
 	font-size: 62.5%;
+	/* 62.5 % * 16 = 10px */
 	/* font-size: 10px */
 }
 /* 

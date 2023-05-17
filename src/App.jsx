@@ -12,20 +12,24 @@ import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
 
 // lazy loading: khi nào cần thì mình mới tải file js về
 // code spliting; chia nhỏ từng file js
+
+// Chú ý: lazy + suspense
 const Home = lazy(() => import('./pages/Home/Home'));
 const Login = lazy(() => import('./pages/Login/Login'));
 const Register = lazy(() => import('./pages/Register/Register'));
 const Detail = lazy(() => import('./pages/Detail/Detail'));
 const Carts = lazy(() => import('./pages/Carts/Carts'));
 const Search = lazy(() => import('./pages/Search/Search'));
-const Profile = lazy(() => {
-	// giả dụ: tốn 5s để tải file js
-	return new Promise((resolve, resject) => {
-		setTimeout(() => {
-			resolve(import('./pages/Profile/Profile'));
-		}, 5000);
-	});
-});
+const Profile = lazy(() => import('./pages/Profile/Profile'));
+
+// const Profile = lazy(() => {
+// 	// giả dụ: tốn 5s để tải file js
+// 	return new Promise((resolve, resject) => {
+// 		setTimeout(() => {
+// 			resolve(import('./pages/Profile/Profile'));
+// 		}, 5000);
+// 	});
+// });
 
 function App() {
 	return (
