@@ -1,59 +1,11 @@
 import React, { Fragment, Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import HeaderHomeTemplate from './components/HeaderHomeTemplate/HeaderHomeTemplate';
 
 function HomeTemplate() {
 	return (
 		<Fragment>
-			<header
-				style={{
-					height: 80,
-					background: 'blue',
-					padding: 50,
-					color: 'white',
-				}}>
-				<ul
-					style={{
-						display: 'flex',
-						gap: '1rem',
-					}}>
-					<li>
-						<NavLink
-							style={{
-								color: 'white',
-							}}
-							to={'/'}>
-							Home
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							style={{
-								color: 'white',
-							}}
-							to='/login'>
-							Login
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							style={{
-								color: 'white',
-							}}
-							to='register'>
-							Register
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							style={{
-								color: 'white',
-							}}
-							to='profile'>
-							Profile
-						</NavLink>
-					</li>
-				</ul>
-			</header>
+			<HeaderHomeTemplate />
 			<div
 				style={{
 					minHeight: '75vh',
