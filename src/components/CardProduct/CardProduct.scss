@@ -1,0 +1,61 @@
+.card-product {
+	background: #f8f8f8;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	width: 34rem;
+
+	// XXX
+	display: flex;
+	flex-direction: column;
+	.card-product-img {
+		padding: 4.5rem;
+		img {
+			width: 21rem;
+			height: 17rem;
+		}
+	}
+	.card-product-interact {
+		display: flex;
+		align-items: center;
+		flex-basis: 50%;
+
+		align-items: end; // XXX
+	}
+
+	.card-product-btn {
+		width: 50%;
+		height: 6.4rem;
+		border: none;
+		font-size: 2.4rem;
+		cursor: pointer;
+
+		// & tượng trưng cho selector cha: .card-product-btn
+		&.buy-now {
+			text-align: center;
+			text-decoration: none;
+			line-height: 6.4rem;
+
+			background-color: #9de167;
+			color: #000000;
+		}
+		&.price {
+			font-weight: 600;
+		}
+	}
+
+	// .card-product-btn.buy-now {
+	// 	background-color: #9de167;
+	// }
+
+	.card-product-content {
+		padding: 0 2.4rem;
+
+		.content-title {
+			font-size: 2.4rem;
+			font-weight: 300;
+			margin: 0;
+			color: #000000;
+		}
+		.content-sub {
+		}
+	}
+}

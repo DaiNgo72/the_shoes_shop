@@ -1,5 +1,5 @@
 import { Suspense, lazy, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
 
 // import Home from './pages/Home/Home';
@@ -48,7 +48,11 @@ function App() {
 					<Route path='login' element={<Login />} />
 					<Route path='register' element={<Register />} />
 					<Route path='carts' element={<Carts />} />
-					<Route path='detail' element={<Detail />} />
+
+					<Route path='detail'>
+						<Route path=':productID' element={<Detail />} />
+					</Route>
+
 					<Route path='search' element={<Search />} />
 					<Route path='profile' element={<Profile />} />
 				</Route>
