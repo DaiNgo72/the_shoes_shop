@@ -1,23 +1,26 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import CardProduct from '../CardProduct/CardProduct';
-import './ListProduct.scss';
 
-function ListProduct() {
-	// tracking, theo dõi xem có cập nhật state hay không.
-	// thay listProduct có thay đổi, component ListProduct: sẽ render lại
+// import kiểu module.
+import css from './ListProduct.module.scss';
+import { mergeClassName } from '../../utils';
 
-	// render lại.
-	const rs = useSelector((state) => state.ProductReducer);
-	const { listProduct } = rs;
-	// 1. array rỗng.
+// SOLID:
+// Single-responsibility principle: Đảm nhiệm một nhiệm vụ duy nhất
 
-	// 2. array(19), dữ liệu mới nhất
+// nhiệm vụ: render list danh sách sản phẩm
+// ( X ): Không có nhiệm vụ show ra UI làm sao hết - vd như margin-bottom.
+function ListProduct(props) {
+	const { listProduct, style, className } = props;
+
+	// <div className={css.ListProduct}> ( X )
 	return (
-		<div className='list-product'>
-			{listProduct.map((product) => {
-				return <CardProduct key={product.id} product={product} />;
-			})}
+		<div className={mergeClassName(css.ListProduct, className)} style={style}>
+			{Array.isArray(listProduct) &&
+				listProduct.map((product) => {
+					return <CardProduct key={product.id} product={product} />;
+				})}
 		</div>
 	);
 }

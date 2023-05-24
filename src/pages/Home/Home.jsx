@@ -3,8 +3,9 @@ import axios from 'axios';
 import CarouselHome from 'src/components/Carousel/Carousel';
 import ListProduct from 'src/components/ListProduct/ListProduct';
 import './Home.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setListProduct } from 'src/redux/slices/Product';
+import { useScrollTop } from '../../hooks/useScrollTop';
 
 // redux cũ. tự tạo action creator
 // const setListProductCreator = (payload) => {
@@ -15,6 +16,10 @@ import { setListProduct } from 'src/redux/slices/Product';
 // };
 
 function Home() {
+	useScrollTop();
+
+	const { listProduct } = useSelector((state) => state.ProductReducer);
+
 	const dispatch = useDispatch();
 
 	const getListProduct = async () => {
@@ -41,12 +46,24 @@ function Home() {
 		getListProduct();
 	}, []);
 
+	const getProductById = async (id) => {
+		// Đẩy lên trên redux;
+		const action = getProductByIdAction();
+		dispatch(action);
+	};
+
 	return (
 		<div>
 			<CarouselHome />
 
 			<h2 className='product-feature'>Product Feature</h2>
-			<ListProduct />
+
+			<ListProduct
+				style={{
+					marginBottom: '5rem',
+				}}
+				listProduct={listProduct}
+			/>
 		</div>
 	);
 }

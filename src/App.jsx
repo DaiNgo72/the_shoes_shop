@@ -1,6 +1,7 @@
-import { Suspense, lazy, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
+import { useScrollTop } from './hooks/useScrollTop';
 
 // import Home from './pages/Home/Home';
 // import Login from './pages/Login/Login';

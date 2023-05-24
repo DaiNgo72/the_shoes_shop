@@ -1,5 +1,6 @@
 // rxslice
 import { createSlice } from '@reduxjs/toolkit';
+import { getProductByIdApi } from '../../services/product.services';
 
 const initialState = {
 	listProduct: [],
@@ -54,3 +55,39 @@ export default ProductSlice.reducer;
 
 // const { reducer } = createSlice({});
 // export default reducer;
+
+// ---------------------------------------
+// tái sử dụng: call api xong, đẩy lên trên redux
+
+// closure function. có thể sử dụng tất cả giá trị biến ở phạm vi function cha.
+export const getProductByIdAction = (id) => {
+	// return về function
+	return async (dispatch) => {
+		// middleware: thunk.
+		const resp = await getProductByIdApi(id);
+
+		const action = setProductDetail(resp.data.content);
+
+		// dispatch: middle thunk, trả ra
+		// dispatch: đẩy dữ liệu lên trên redux
+		dispatch(action);
+	};
+};
+
+// function callApi(b) {
+// 	var b = b;
+// 	const a = 10; // clear
+// 	return a + 20;
+// } // kết thúc thì biến "a" | "b" bị clear đi.
+// console.log(callApi());
+
+// function callApi() {
+// 	const a = 10;
+// 	return () => {
+// 		console.log(a); // "a": không bị clear đi.
+// 	};
+// }
+
+// callApi();
+
+// IIFE: hàm gọi liền
