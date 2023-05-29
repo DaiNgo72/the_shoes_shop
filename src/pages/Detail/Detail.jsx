@@ -5,22 +5,24 @@ import { NavLink, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getProductByIdAction,
+	getProductByIdThunk,
 	setProductDetail,
 } from '../../redux/slices/Product';
 import CardProduct from '../../components/CardProduct/CardProduct';
 import { useScrollTop } from '../../hooks/useScrollTop';
 import ListProduct from '../../components/ListProduct/ListProduct';
+import { Skeleton } from 'antd';
 
 // style
 import './Detail.scss'; // download file scss
 import { getProductByIdApi } from '../../services/product.services';
 
 function Detail() {
-	useScrollTop();
-
 	const params = useParams();
 	const dispatch = useDispatch();
-	const { productDetail } = useSelector((state) => state.ProductReducer);
+	const { productDetail, isLoading } = useSelector(
+		(state) => state.ProductReducer
+	);
 
 	const getProductById = async (id) => {
 		try {
@@ -33,12 +35,15 @@ function Detail() {
 			 * 2. function
 			 */
 
+			// 1. thunk: Cách cũ
 			// mong muốn trả về: action = function
-			const action = getProductByIdAction(id);
-			// dispatch: gọi action async.
-			dispatch(action);
+			// const action = getProductByIdAction(id);
+			// // dispatch: gọi action async.
+			// dispatch(action);
 
-			// dispatch(getProductByIdAction(id))
+			// 2. Thunk: Cách mới.
+			const actionThunk = getProductByIdThunk(id);
+			dispatch(actionThunk);
 		} catch (err) {
 			console.log(err);
 			// alert('API Lỗi Rồi Nè');
@@ -75,6 +80,12 @@ function Detail() {
 		// };
 		// fn();
 	}, [params.productID]);
+
+	if (isLoading) {
+		// tạo skeleton
+		return <Skeleton active />;
+	}
+
 	return (
 		<div>
 			<DetailProduct />

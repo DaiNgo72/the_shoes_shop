@@ -1,11 +1,21 @@
 // rxslice
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getProductByIdApi } from '../../services/product.services';
 
 const initialState = {
 	listProduct: [],
 	productDetail: {},
+	isLoading: true,
 };
+
+export const getProductByIdThunk = createAsyncThunk(
+	'ProductSlice/getProductById',
+	async (id) => {
+		const resp = await getProductByIdApi(id);
+
+		return resp; // chính là action.payload
+	}
+);
 
 const ProductSlice = createSlice({
 	name: 'ProductSlice',
@@ -25,6 +35,21 @@ const ProductSlice = createSlice({
 		setProductDetail: (state, action) => {
 			state.productDetail = action.payload;
 		},
+	},
+	extraReducers: (builder) => {
+		builder.addCase(getProductByIdThunk.pending, (state, action) => {
+			// console.log(action);
+			// đang call api
+			state.isLoading = true;
+		});
+
+		builder.addCase(getProductByIdThunk.fulfilled, (state, action) => {
+			// console.log(action);
+			state.productDetail = action.payload.data.content;
+
+			// set lại isLoading = false.
+			state.isLoading = false;
+		});
 	},
 });
 
@@ -60,6 +85,8 @@ export default ProductSlice.reducer;
 // tái sử dụng: call api xong, đẩy lên trên redux
 
 // closure function. có thể sử dụng tất cả giá trị biến ở phạm vi function cha.
+
+// Tốn 2 bước.
 export const getProductByIdAction = (id) => {
 	// return về function
 	return async (dispatch) => {

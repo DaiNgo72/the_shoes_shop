@@ -4,6 +4,9 @@ import HeaderHomeTemplate from './components/HeaderHomeTemplate/HeaderHomeTempla
 import { useScrollTop } from '../../hooks/useScrollTop';
 
 function HomeTemplate() {
+	// app có re-render không? app không render. nên nó không chạy lại useScrollTop
+	useScrollTop();
+
 	return (
 		<Fragment>
 			<HeaderHomeTemplate />
