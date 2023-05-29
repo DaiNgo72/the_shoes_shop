@@ -2,6 +2,9 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import * as Yup from 'yup';
+import { saveLocalStorage } from '../../utils';
+import { ACCESS_TOKEN } from '../../constant';
+import { useNavigate } from 'react-router-dom';
 
 const schemaLogin = Yup.object({
 	email: Yup.string().email().required('Username is required'),
@@ -12,6 +15,8 @@ const schemaLogin = Yup.object({
 });
 
 function Login() {
+	const navigate = useNavigate();
+
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -32,6 +37,20 @@ function Login() {
 					}
 				);
 				console.log({ resp });
+
+				// lưu vào storage
+				saveLocalStorage(ACCESS_TOKEN, resp.data.content.accessToken);
+
+				navigate('/profile');
+				// public: ai cũng có thể gọi được hết.
+
+				// private: cần phải xác định được danh tính bạn là ai thì mới được phép gọi những api đó.
+
+				// tạo thẻ từ: chứa tất cả thông tin của các bạn.
+
+				// accessToken: dựa vào đây để xem thử bạn có được phép gọi những api đó hay không.
+				// redux. mỗi lần reload page => mất.
+				// localStrogate. => không bị mất mỗi lần reload page.
 			} catch (err) {
 				console.log(err);
 			}

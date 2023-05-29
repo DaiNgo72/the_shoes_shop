@@ -1,7 +1,7 @@
 // rfce
 import React, { Fragment } from 'react';
 import './HeaderHomeTemplate.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 // import LogoSvg from 'src/assets/imgs/logo.svg';
 import SearchSvg from 'src/assets/imgs/search.svg';
 
@@ -12,8 +12,29 @@ import SearchSvg from 'src/assets/imgs/search.svg';
 // import Logo from 'src/assets/icons/Logo';
 // import SearchIcon from 'src/assets/icons/SearchIcon';
 import { LogoIcon, SearchIcon } from 'src/assets/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteKey } from '../../../../utils';
+import { ACCESS_TOKEN } from '../../../../constant';
+import { resetUserProfile } from '../../../../redux/slices/User';
 
 function HeaderHomeTemplate() {
+	const { userProfile } = useSelector((state) => state.UserReducer);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const handleLogout = () => {
+		// chuyển về trang login
+		navigate('/login');
+		// xóa localStorage
+		deleteKey(ACCESS_TOKEN);
+		// reset userLogin ở trên redux.
+		const action = resetUserProfile();
+		dispatch(action);
+
+		// dispatch(resetUserProfile());
+
+		//  call api logout.
+	};
 	return (
 		<Fragment>
 			<header className='header-home-template'>
@@ -23,13 +44,26 @@ function HeaderHomeTemplate() {
 						<img src={SearchSvg} />
 						<p className='header-text-search'>Search</p>
 					</div>
-
-					<NavLink className={'header-link'} to={'/login'}>
-						Login
-					</NavLink>
-					<NavLink className={'header-link'} to={'/register'}>
-						Register
-					</NavLink>
+					{userProfile.email ? (
+						<>
+							<p
+								style={{
+									color: 'white',
+								}}>
+								{userProfile.email}
+							</p>
+							<button onClick={handleLogout}>Logout</button>
+						</>
+					) : (
+						<>
+							<NavLink className={'header-link'} to={'/login'}>
+								Login
+							</NavLink>
+							<NavLink className={'header-link'} to={'/register'}>
+								Register
+							</NavLink>
+						</>
+					)}
 				</div>
 			</header>
 			<nav className='header-menu'>
